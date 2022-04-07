@@ -1,0 +1,61 @@
+model_type: keyphrase
+tgt_type: one2one
+
+data: data/keyphrase/meng17/kp20k_small
+save_checkpoint_steps: 250
+keep_checkpoint: 1000
+seed: 3435
+train_steps: 15000
+valid_steps: 250
+report_every: 1
+
+encoder_type: brnn
+rnn_type: GRU_hyper
+word_vec_size: 200
+rnn_size: 200
+layers: 1
+
+optim: riemannian_adam
+learning_rate: 0.0008
+#learning_rate_decay: 0.9
+#start_decay_steps: 20000
+#decay_steps: 5000
+adagrad_accumulator_init: 0.1
+max_grad_norm: 0.0
+#accum_count:
+
+batch_size: 4
+valid_batch_size: 4
+dropout: 0.0
+#adam_beta1: 0.9
+#adam_beta2: 0.999
+
+global_attention: hype_asymm_exp_exp_dire_neg_var_rec
+copy_attn: 'true'
+reuse_copy_attn: 'true'
+bridge: 'true'
+tensorboard: 'true'
+log_file_level: DEBUG
+
+
+context_gate: 'hyper'
+input_feed: 1
+share_embeddings: 'true'
+position_encoding: 'false'
+copy_loss_by_seqlength: 'false'
+
+exp: kp20k-one2one-birnn-hyper_network_symmetricatt-GRU16-EMB10-ATTNmlp-local
+save_model: models/keyphrase/meng17/hype_asymm_exp_exp_dire_neg_var_rec_small_200_b4/model/kp20k.one2one_hyper_network.birnn.local
+log_file: output/keyphrase/meng17/hype_asymm_exp_exp_dire_neg_var_rec_small_200_b4/log/kp20k.one2one_hyper_network.birnn.local.log
+tensorboard_log_dir: runs/keyphrase/meng17/hype_asymm_exp_exp_dire_neg_var_rec_small_200_b4/runs/kp20k.one2one_hyper_network.birnn.local/
+
+world_size: 1
+gpu_ranks: 0
+#gpuid: 1
+wd: 0.0
+poincare_type: 100D_cosh-dist-sq_init_trick
+dataset: kp20k
+network_type: hyperbolic
+embedding_type: euclidiean
+pretrained_wordembedding: 0
+decision_type: hyp
